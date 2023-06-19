@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    | Index
+{% endblock %}
+
+{% block main %}
+    <h1>Welcome, {{ current_user.username }}!</h1>
+
+    <h2>Projects</h2>
+    <ul>
+        {% for project in projects %}
+        <li>Project Name: {{ project.name }}, User ID: {{ project.user_id }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Tasks</h2>
+    <ul>
+        {% for task in tasks %}
+        <li>Task Name: {{ task.title }}, Project ID: {{ task.project_id }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Comments</h2>
+    <ul>
+        {% for comment in comments %}
+        <li>Content: {{ comment.content }}, Task ID: {{ comment.task_id }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Notifications</h2>
+    <ul>
+        {% for notification in notifications %}
+        <li>Content: {{ notification.content }}, Timestamp: {{ notification.timestamp }}</li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}

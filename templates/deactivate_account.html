@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Deactivate Account
+{% endblock %}
+
+{% block main %}
+    <h2>Deactivate Account</h2>
+    <p>Are you sure you want to deactivate your account?</p>
+    <form action="/deactivate_account" method="POST">
+        <button type="submit" class="btn btn-danger">Deactivate</button>
+        <a class="btn btn-secondary" href="/">Cancel</a>
+    </form>
+{% endblock %}

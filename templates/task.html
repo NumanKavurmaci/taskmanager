@@ -1,0 +1,108 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <h1>Show Task</h1>
+
+    <form method="POST">
+        <label for="task-select">Select a task:</label>
+        <select id="task-select" name="task_id">
+            {% for task in tasks %}
+                <option value="{{ task.id }}">{{ task.title }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Show">
+    </form>
+
+    <div class="task-details">
+        {% if selected_task %}
+            <h2>Task Information</h2>
+            <table class="task-table">
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Due Date</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Creation Time</th>
+                    <th>Created By</th>
+                    <th>Assigned Workers</th>
+                </tr>
+                <tr>
+                    <td>{{ selected_task.id }}</td>
+                    <td>{{ selected_task.title }}</td>
+                    <td>{{ selected_task.description }}</td>
+                    <td>{{ selected_task.due_date }}</td>
+                    <td>{{ selected_task.priority }}</td>
+                    <td>{{ selected_task.status }}</td>
+                    <td>{{ selected_task.created_at }}</td>
+                    <td>{{ creator_dict.username }}</td>
+                    <td>
+                        {% for user in selected_task.assigned_users %}
+                            {{ user.user_info.full_name }}<br>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </table>
+
+        {% if selected_task.comments %}
+            <h2>Comments</h2>
+            <ul>
+                {% for comment in selected_task.comments %}
+                    <li>{{ comment.content }} ({{ comment.author }} - {{ comment.timestamp }})</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No comments for this task.</p>
+        {% endif %}
+
+
+
+            {% if user_authority == 1 %}
+                <h2>Edit Task</h2>
+                <form method="POST">
+                    <input type="hidden" name="task_id" value="{{ selected_task.id }}">
+                    <label for="edit-title">Title:</label>
+                    <input type="text" id="edit-title" name="edit_title" value="{{ selected_task.title }}" required>
+
+                    <label for="edit-description">Description:</label>
+                    <textarea id="edit-description" name="edit_description" required>{{ selected_task.description }}</textarea>
+
+                    <label for="edit-due-date">Due Date:</label>
+                    <input type="date" id="edit-due-date" name="edit_due_date" value="{{ selected_task.due_date }}" required>
+
+                    <label for="edit-priority">Priority:</label>
+                    <select id="edit-priority" name="edit_priority" required>
+                        <option value="low" {% if selected_task.priority == 'low' %}selected{% endif %}>Low</option>
+                        <option value="medium" {% if selected_task.priority == 'medium' %}selected{% endif %}>Medium</option>
+                        <option value="high" {% if selected_task.priority == 'high' %}selected{% endif %}>High</option>
+                    </select>
+
+                    <label for="edit-status">Status:</label>
+                    <select id="edit-status" name="edit_status" required>
+                        <option value="Not Started">Not Started</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="On Hold">On Hold</option>
+                        <option value="Cancelled">Cancelled</option>
+                        <option value="Pending Review">Pending Review</option>
+                        <option value="Blocked">Blocked</option>
+                        <option value="Deferred">Deferred</option>
+                    </select>
+
+                    <input type="submit" value="Update Task">
+                </form>
+            {% endif %}
+
+            <h2>Add Comment</h2>
+            <form method="POST">
+                <input type="hidden" name="task_id" value="{{ selected_task.id }}">
+                <label for="comment-content">Comment:</label>
+                <textarea id="comment-content" name="comment_content" required></textarea>
+                <input type="submit" value="Add Comment">
+            </form>
+        {% else %}
+            <p>No task selected.</p>
+        {% endif %}
+    </div>
+{% endblock %}

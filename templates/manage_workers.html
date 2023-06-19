@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block main %}
+  <h1>Manage Workers</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Tasks</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for worker in workers %}
+        <tr>
+          <td>{{ worker.username }}</td>
+          <td>{{ worker.email }}</td>
+          <td>
+            {% for task in worker.tasks %}
+              {{ task.title }}<br>
+            {% endfor %}
+          </td>
+          <td>
+            <a href="/manage_workers_user_info/{{ worker.id }}" class="btn btn-primary">Manage Worker</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

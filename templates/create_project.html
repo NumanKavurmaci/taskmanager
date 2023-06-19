@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <h1>Create Project</h1>
+<form method="POST" action="/create_project?selected_tasks={{ selected_tasks }}">
+        <!-- Form inputs for project name and description -->
+        <div>
+            <label for="title">Project Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+
+        <div>
+            <label for="tasks">Select Tasks:</label>
+            <select name="tasks" multiple id="task-select">
+                {% for task in tasks %}
+                    <option value="{{ task.id }}">{{ task.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit">Create Project</button>
+    </form>
+{% endblock %}

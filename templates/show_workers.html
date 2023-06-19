@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <h1>User Information</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Department</th>
+                <th>Task</th>
+                <th>Authority</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.user_info.full_name }}</td>
+                <td>{{ user.user_info.department }}</td>
+                <td>
+                    {% for task in user.tasks %}
+                        {{ task.title }}<br>
+                    {% endfor %}
+                </td>
+                <td>{{ user.authority }}</td>
+                <td>
+                    <a href="/manage_workers_user_info/{{ user.id }}" class="btn btn-primary">Manage Workers</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block styles %}
+  <style>
+    .task-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .task-table th,
+    .task-table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .task-table th {
+      background-color: #f2f2f2;
+    }
+
+    .task-table tr:hover {
+      background-color: #f9f9f9;
+    }
+  </style>
+{% endblock %}
+
+{% block main %}
+  <h1>All Tasks</h1>
+
+  <!-- Search form -->
+  <form action="/show_tasks" method="GET" class="search-form">
+    <input type="text" name="name" placeholder="Search by name">
+    <input type="text" name="tags" placeholder="Search by tags">
+    <input type="date" name="due_date" placeholder="Search by due date">
+    <input type="text" name="created_by" placeholder="Search by creator">
+    <input type="date" name="created_at" placeholder="Search by creation date">
+    <button type="submit">Search</button>
+  </form>
+
+  <!-- Sorting dropdown -->
+  <form action="/show_tasks" method="GET" class="sort-form">
+    <select name="sort_by">
+      <option value="">Sort by</option>
+      <option value="title">Title</option>
+      <option value="tags">Tags</option>
+      <option value="due_date">Due Date</option>
+      <!-- Add more options for other sorting criteria -->
+    </select>
+    <button type="submit">Sort</button>
+  </form>
+
+  <table class="task-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Tags</th>
+        <th>Due Date</th>
+        <th>Priority</th>
+        <th>Status</th>
+        <th>Created By</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in tasks %}
+        <tr>
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td>{{ task.tags }}</td>
+          <td>{{ task.due_date }}</td>
+          <td>{{ task.priority }}</td>
+          <td>{{ task.status }}</td>
+          <td>{{ creator_dict[task.created_by] }}</td>
+          <td>
+            <form action="/show_task" method="POST">
+              <input type="hidden" name="task_id" value="{{ task.id }}">
+              <button type="submit" class="view-task-btn">View Task</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
