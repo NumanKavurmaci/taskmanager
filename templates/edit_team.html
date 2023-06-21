@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <h1>Edit Team</h1>
+    <form action="/edit_team/{{ team.id }}" method="POST">
+        <input type="hidden" name="_method" value="POST">
+        <div class="form-group">
+            <label for="team_name">Team Name</label>
+            <input type="text" id="team_name" name="team_name" value="{{ team.name }}" required>
+        </div>
+        <div class="form-group">
+            <label for="team_description">Team Description</label>
+            <input type="text" id="team_description" name="team_description" value="{{ team.description }}" required>
+        </div>
+
+        <h3>Team Members:</h3>
+        <ul>
+            {% for user in team.users %}
+                <li>
+                    <strong>{{ user.user_info.full_name }}</strong> (Role: {{ user.role }})
+
+                    <form action="/edit_team/{{ team.id }}/{{ user.id }}" method="POST" style="display:inline">
+                        <input type="hidden" name="member_id" value="{{ user.id }}">
+                        <label for="role">Role:</label>
+                        <input type="text" id="role" name="role" value="{{ user.role }}" required>
+                        <button type="submit" class="btn btn-primary">Update Role</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <hr>
+
+        <button type="submit">Update</button>
+    </form>
+{% endblock %}

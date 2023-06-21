@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+  <h1>Worker Performance</h1>
+
+  <form action="/worker_performance" method="POST">
+    <div class="table-filters">
+      <label for="sort-by">Sort By:</label>
+      <select id="sort-by" name="sort-by">
+        <option value="name">Name</option>
+        <option value="department">Department</option>
+        <option value="completion-rate">Completion Rate</option>
+      </select>
+
+      <label for="filter-by">Filter By:</label>
+<select id="filter-by" name="filter-by">
+  <option value="all">All</option>
+  <option value="active">Active</option>
+  <option value="inactive">Inactive</option>
+  {% for department in department_options %}
+    <option value="{{ department }}">{{ department }}</option>
+  {% endfor %}
+</select>
+
+      <button type="submit">Apply Filters</button>
+    </div>
+  </form>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Department</th>
+        <th>Name</th>
+        <th>Task Number</th>
+        <th>Task Priority</th>
+        <th>Completed Task Number</th>
+        <th>Completed Task Priority</th>
+        <th>Completion Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.user_info.department }}</td>
+          <td>{{ user.user_info.full_name }}</td>
+          <td>{{ user.task_number }}</td>
+          <td>{{ user.task_priority }}</td>
+          <td>{{ user.completed_task_number }}</td>
+          <td>{{ user.completed_task_priority }}</td>
+          <td>
+            {% if user.task_number != 0 %}
+              {{ (user.completed_task_number / user.task_number)|round(2) }}
+            {% else %}
+              N/A
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

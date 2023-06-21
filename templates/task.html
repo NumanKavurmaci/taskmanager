@@ -45,22 +45,9 @@
                 </tr>
             </table>
 
-        {% if selected_task.comments %}
-            <h2>Comments</h2>
-            <ul>
-                {% for comment in selected_task.comments %}
-                    <li>{{ comment.content }} ({{ comment.author }} - {{ comment.timestamp }})</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No comments for this task.</p>
-        {% endif %}
-
-
-
             {% if user_authority == 1 %}
                 <h2>Edit Task</h2>
-                <form method="POST">
+                <form method="POST" action="/show_task">
                     <input type="hidden" name="task_id" value="{{ selected_task.id }}">
                     <label for="edit-title">Title:</label>
                     <input type="text" id="edit-title" name="edit_title" value="{{ selected_task.title }}" required>
@@ -69,7 +56,7 @@
                     <textarea id="edit-description" name="edit_description" required>{{ selected_task.description }}</textarea>
 
                     <label for="edit-due-date">Due Date:</label>
-                    <input type="date" id="edit-due-date" name="edit_due_date" value="{{ selected_task.due_date }}" required>
+                    <input type="date" class="form-control" id="edit-due-date" name="edit_due_date" value="{{ selected_task.due_date }}" required>
 
                     <label for="edit-priority">Priority:</label>
                     <select id="edit-priority" name="edit_priority" required>
@@ -80,14 +67,14 @@
 
                     <label for="edit-status">Status:</label>
                     <select id="edit-status" name="edit_status" required>
-                        <option value="Not Started">Not Started</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Completed">Completed</option>
-                        <option value="On Hold">On Hold</option>
-                        <option value="Cancelled">Cancelled</option>
-                        <option value="Pending Review">Pending Review</option>
-                        <option value="Blocked">Blocked</option>
-                        <option value="Deferred">Deferred</option>
+                        <option value="Not Started" {% if selected_task.status == 'Not Started' %}selected{% endif %}>Not Started</option>
+                        <option value="In Progress" {% if selected_task.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                        <option value="Completed" {% if selected_task.status == 'Completed' %}selected{% endif %}>Completed</option>
+                        <option value="On Hold" {% if selected_task.status == 'On Hold' %}selected{% endif %}>On Hold</option>
+                        <option value="Cancelled" {% if selected_task.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                        <option value="Pending Review" {% if selected_task.status == 'Pending Review' %}selected{% endif %}>Pending Review</option>
+                        <option value="Blocked" {% if selected_task.status == 'Blocked' %}selected{% endif %}>Blocked</option>
+                        <option value="Deferred" {% if selected_task.status == 'Deferred' %}selected{% endif %}>Deferred</option>
                     </select>
 
                     <input type="submit" value="Update Task">
@@ -95,12 +82,23 @@
             {% endif %}
 
             <h2>Add Comment</h2>
-            <form method="POST">
+            <form method="POST" action="/show_task">
                 <input type="hidden" name="task_id" value="{{ selected_task.id }}">
                 <label for="comment-content">Comment:</label>
                 <textarea id="comment-content" name="comment_content" required></textarea>
                 <input type="submit" value="Add Comment">
             </form>
+
+            {% if selected_task.comments %}
+                <h2>Comments</h2>
+                <ul>
+                    {% for comment in selected_task.comments %}
+                        <li>{{ comment.content }} ({{ comment.author }} - {{ comment.timestamp }})</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No comments for this task.</p>
+            {% endif %}
         {% else %}
             <p>No task selected.</p>
         {% endif %}

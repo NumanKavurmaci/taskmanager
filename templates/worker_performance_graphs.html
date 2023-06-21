@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+  <h1>Worker Performance Graphs</h1>
+
+  <div>
+    <h2>Graph 1: Bar Chart</h2>
+    <div id="graph-bar">
+      <img src="{{ url_for('serve_chart', filename=chart_filename) }}" alt="Bar Chart">
+    </div>
+  </div>
+{% endblock %}

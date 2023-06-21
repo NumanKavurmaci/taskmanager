@@ -10,6 +10,7 @@
                 <th>Description</th>
                 <th>Tasks</th>
                 <th>Assigned Users</th>
+                <th>Assigned Teams</th>
             </tr>
         </thead>
         <tbody>
@@ -29,12 +30,26 @@
                             No tasks found for this project.
                         {% endif %}
                     </td>
-                    <td>
-                        {% for user in project.assigned_users %}
-                            {{ user.user_info.full_name }}
-                            {% if not loop.last %}, {% endif %}
-                        {% endfor %}
+<td>
+    {% for team in project.assigned_teams %}
+        {% for user in team.team_members %}
+            {{ user.user_info.full_name }}
+            {% if not loop.last %}, {% endif %}
+        {% endfor %}
+    {% endfor %}
+</td>
+                                        <td>
+                        {% if project.assigned_teams %}
+                            <ul>
+                                {% for team in project.assigned_teams %}
+                                    <li>{{ team.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            No team found for this project.
+                        {% endif %}
                     </td>
+
                 </tr>
             {% endfor %}
         </tbody>

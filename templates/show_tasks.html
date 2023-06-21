@@ -59,6 +59,7 @@
         <th>Priority</th>
         <th>Status</th>
         <th>Created By</th>
+        <th>Teams</th>
         <th></th>
       </tr>
     </thead>
@@ -72,6 +73,15 @@
           <td>{{ task.priority }}</td>
           <td>{{ task.status }}</td>
           <td>{{ creator_dict[task.created_by] }}</td>
+<td>
+  {% for team in task.assigned_teams %}
+    {{ team.name }}
+    {% if not loop.last %}
+      <br>
+    {% endif %}
+  {% endfor %}
+</td>
+
           <td>
             <form action="/show_task" method="POST">
               <input type="hidden" name="task_id" value="{{ task.id }}">

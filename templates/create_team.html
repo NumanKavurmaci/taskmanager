@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <h1>Create Team</h1>
+    <form action="/create_team" method="POST">
+        <label for="team_name">Team Name:</label>
+        <input type="text" id="team_name" name="team_name" required><br><br>
+
+        <label for="team_description">Team Description:</label>
+        <input type="text" id="team_description" name="team_description" required><br><br>
+
+        <label for="users">Select Team Members:</label><br>
+        {% for user in users %}
+            <input type="checkbox" name="users" value="{{ user.id }}"> {{ user.user_info.full_name }}<br>
+        {% endfor %}
+
+        <br>
+        <label for="roles">Assign Roles:</label><br>
+        {% for user in users %}
+            <input type="text" name="roles" placeholder="Role for {{ user.user_info.full_name }}"><br>
+        {% endfor %}
+
+        <br>
+        <input type="submit" value="Create Team">
+    </form>
+{% endblock %}

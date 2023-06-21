@@ -144,15 +144,37 @@ input[type="submit"]:hover {
 .view-task-btn:hover {
   background-color: #446d9d;
 }
-select[name="tasks"] {
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 6px;
+
+/* Dark theme */
+body.dark-theme {
+  background-color: #333;
+  color: #fff;
 }
 
-select[name="tasks"] option:checked {
+body.dark-theme .navbar {
+  background-color: #111;
+}
+
+body.dark-theme h1,
+body.dark-theme h2 {
+  color: #fff;
+}
+
+body.dark-theme label {
+  color: #fff;
+}
+
+body.dark-theme .form-control {
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+body.dark-theme select[name="tasks"] {
   background-color: #2e944b;
   color: #fff;
 }
 
+body.dark-theme select[name="tasks"] option:checked {
+  background-color: #2e944b;
+  color: #fff;
+}

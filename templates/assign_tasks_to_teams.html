@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    - Assign Task to Team
+{% endblock %}
+
+{% block main %}
+    <h1>Assign Task to Team</h1>
+    <form method="POST" action="/assign_tasks_to_teams">
+        <div class="form-group">
+            <label for="team_id">Select Team:</label>
+            <select class="form-control" id="team_id" name="team_id">
+                {% for team in teams %}
+                    <option value="{{ team.id }}">{{ team.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="task_id">Select Task:</label>
+            <select class="form-control" id="task_id" name="task_id">
+                {% for task in tasks %}
+                    <option value="{{ task.id }}">{{ task.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Assign Task</button>
+    </form>
+{% endblock %}
