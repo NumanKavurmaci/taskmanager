@@ -6,7 +6,7 @@ from helper import calculate_user_task_priority
 from sqlalchemy.orm import joinedload,object_session
 from sqlalchemy.orm.exc import StaleDataError
 
-from flask import Flask, render_template, redirect, request, flash, jsonify, g, abort
+from flask import Flask, render_template, redirect, request, flash, jsonify, g, abort,send_from_directory
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from flask_bcrypt import Bcrypt
 
