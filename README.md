@@ -1,3 +1,6 @@
+WARNING
+User registration is not working because of relationships between models. WIP!
+
 Overall features:
 
 1. User Registration and Authentication: Allow users to create an account and securely log in to access their tasks and settings.
