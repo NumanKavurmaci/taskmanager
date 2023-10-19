@@ -100,17 +100,14 @@ class User(Base, UserMixin):
 class UserInfo(Base):
     __tablename__ = "user_info"
     id = Column(Integer, primary_key=True)
+    user = relationship("User", back_populates="user_info")
+    user_id = Column(Integer, ForeignKey("users.id"))
+
     full_name = Column(String(100))
     age = Column(Integer)
     address = Column(String(200))
     phone_number = Column(String(20))
     department = Column(String(50))
-    user_id = Column(Integer, ForeignKey("users.id"))
-    user = relationship("User", back_populates="user_info")
-
-    def __init__(self, full_name, age, address, phone_number, department, user_id):
-        super().__init__(full_name, age, address, phone_number, department, user_id)
-        self.full_name = full_name.split(" ")[0] + " " + full_name.split(" ")[-1]
 
 
 class Project(Base):
