@@ -1,5 +1,4 @@
-WARNING
-User registration is not working because of relationships between models. WIP!
+
 
 Overall features:
 
